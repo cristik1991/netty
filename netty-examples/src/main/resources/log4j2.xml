@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN" monitorInterval="30" packages="com.cristik.framework.log4j2.pattern">
+    <appenders>
+        <!-- 控制台输出 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}][%level][%logger{1.}:%L] -[%request] %m%n"/>
+        </Console>
+        <!-- 临时文件输出 -->
+        <File name="TempLog" fileName="logs/temp.log" append="false">
+            <PatternLayout pattern="[%d{HH:mm:ss.SSS}] %-5level %class{36} %L %M -[%request] %msg%xEx%n"/>
+        </File>
+        <!-- Debug级别输出 -->
+        <RollingFile name="Debug" fileName="logs/debug.log" filePattern="logs/backup/%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}][%p] - %l - [%request] %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <CronTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <!-- 屏蔽debug输出 -->
+        <logger name="org.quartz" level="INFO"/>
+        <logger name="com.mongodb" level="INFO"/>
+        <logger name="org.apache.kafka" level="INFO"/>
+        <logger name="org.apache.shiro" level="INFO"/>
+        <logger name="org.springframework" level="INFO"/>
+        <!-- 开启自己代码的debug输出 -->
+        <logger name="org.mybatis" level="DEBUG"/>
+        <logger name="com.cristik" level="DEBUG"/>
+        <logger name="com.stellar" level="DEBUG"/>
+        <root level="INFO">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="TempLog"/>
+            <appender-ref ref="Debug"/>
+        </root>
+    </loggers>
+</configuration>
