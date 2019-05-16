@@ -35,10 +35,10 @@ public class HttpUploadFileServerInitializer extends ChannelInitializer<SocketCh
         pipeline.addLast(new HttpResponseEncoder());
         // Remove the following line if you don't want automatic content compression.
         pipeline.addLast(new HttpContentCompressor());
+        pipeline.addLast(new HttpServerCodec());
         pipeline.addLast(new HttpObjectAggregator(65536));
         pipeline.addLast(new ChunkedWriteHandler());
         pipeline.addLast(new CorsHandler(corsConfig));
-//        pipeline.addLast(new HttpUploadFileServerHandler());
         pipeline.addLast(new HttpFileServerHandler());
 
     }

@@ -236,6 +236,10 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
         <!-- slf4j核心包 -->
         <dependency>
             <groupId>org.slf4j</groupId>
